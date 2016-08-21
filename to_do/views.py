@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from to_do.forms import SignUpForm, TaskForm, LogInForm
+from to_do.models import Task
+
 
 def home(request):
     template = 'login.html'
@@ -21,9 +23,18 @@ def home(request):
 
 def lists(request):
     template = 'lists.html'
+    tasks = Task.objects.filter(completed=False)
+    t = []
+    for i in tasks:
+        k = {
+            'id': int(i.id),
+            'text': str(i.text)
+        }
+        t.append(k)
     form = TaskForm()
     ctx = {
-        'form': form
+        'form': form,
+        'tasks': t
     }
     ctx = RequestContext(request, ctx)
     response = render_to_response(template, ctx)

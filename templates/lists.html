@@ -80,14 +80,28 @@ button{
             </div>
         </li> -->
 
+        {% for i in tasks %}
+        <li>
+            <div class='row-container'>
+                <span><textarea class="task" wrap="off" rows="1" id="{{ i.id }}">{{ i.text }} </textarea></span>
+            </div>
+        </li>
+        {% endfor %}
+
     </ul>
 </div>
+
+{{ tasks }}
 
 {% endblock %}
 
 {% block scripts %}
 
 <script>
+
+function populate_data(){
+
+}
 
 $("#add-task").on("click", function(){
     $("#new-data").removeClass("invisible");

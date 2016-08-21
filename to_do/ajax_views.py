@@ -18,7 +18,6 @@ def save_new_form(request):
 
     result = {
         'status': "OK",
-        'status_code': 200
     }
 
     return HttpResponse(
