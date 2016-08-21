@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+
+{% block extracss %}
+<link href="{{ STATIC_URL }}css/login.css" rel="stylesheet" type="text/css">
+<style>
+.helptext{
+    display: none;
+}
+
+.form-div{
+    margin-top: 30px;
+    clear: both;
+}
+
+.form-div p {
+    margin: 0;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.form-div p input{
+    float: right;
+    margin-right:30px;
+    border-radius: 3px;
+}
+
+</style>
+{% endblock %}
+
+
+{% block bodyblock %}
+
+<div class='login-modal'>
+    <div class="tab-header">
+        <div class="tab float-left border-right border-bottom" id="login">
+            <p>LogIn</p>
+        </div>
+        <div class="tab float-right" id="signup">
+            <p>SignUp</p>
+        </div>
+    </div>
+    <div id="for-signup" class="form-div invisible">
+        <center> SignUp </center><br/>
+        <form action=''  method="POST">
+            {{ signup_form.as_p }}
+            <p><input type="submit" value="Sign Up" /></p>
+        </form>
+    </div>
+    <div id="for-login" class="form-div">
+        <center> Log In</center><br/>
+        <form action='' method="POST">
+            {{ login_form.as_p }}
+            <p><input type="submit" value="Log In" /></p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+$(document).ready(function(){
+    $(".tab").hover(function(){
+    $(this).css("cursor", "pointer");
+    $(this).addClass("border-bottom");
+    }, function(){
+        $(this).removeClass("border-bottom");
+    });
+
+    $("#login").on('click', function(){
+        $("#signup").removeClass("border-bottom");
+        $(this).addClass("border-bottom");
+        $("#for-login").removeClass("invisible");
+        $("#for-signup").addClass("invisible");
+    });
+
+    $("#signup").on('click', function(){
+        $("#login").removeClass("border-bottom");
+        $("#signup").addClass("border-bottom");
+        $("#for-login").addClass("invisible");
+        $("#for-signup").removeClass("invisible");
+    });
+
+});
+</script>
+
+{% endblock %}
