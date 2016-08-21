@@ -42,6 +42,7 @@ textarea {
     height: 35px;
     width: 500px;
     overflow-x: hidden;
+    overflow-y: hidden;
     font-size: 20px;
     padding:0;
     resize: none;
@@ -67,23 +68,18 @@ button{
 
 <div class='container'>
     <button id="add-task"> Add task </button>
-    <ul>
-        <li>
-            <div id="new-data" class="row-container invisible">
-                <span><input type="text" value="Add data"/> </span>
-            </div>
-        <li>
-            <!-- <div class='row-container'>
-                <span><input type="checkbox" /></span>
-                <span><input type="text" value="test"/> </span>
-            </div> -->
-        </li>
-        <li>
+    <div id="new-data" class="invisible">
+        <form method="POST" url="{% url save_new_form %}">
+            {% csrf_token %}
+            <span>{{ form.text }} </span>
+        </form>
+    </div>
+    <ul class="tasks-container">
+        <!-- <li>
             <div class='row-container'>
-                <span>{{ form.completed }}</span>
-                <span>{{ form.text }} </span>
             </div>
-        </li>
+        </li> -->
+
     </ul>
 </div>
 
@@ -94,7 +90,32 @@ button{
 <script>
 
 $("#add-task").on("click", function(){
-    $("#new-data").toggleClass("invisible");
+    $("#new-data").removeClass("invisible");
+});
+
+$("#new-data textarea").keydown(function(e){
+    if((e.keyCode || e.which) == 13){
+        e.preventDefault();
+        $("#new-data").addClass("invisible");
+        $form = $("#new-data form");
+        $data = {
+            'text': $("#id_text").val(),
+            'csrfmiddlewaretoken':$("input[name='csrfmiddlewaretoken']").val()
+        }
+        console.log($data);
+        $.ajax({
+            url: $form.attr("url"),
+            dataType: "json",
+            type: "POST",
+            data: $data,
+            success: function(response){
+                console.log(response);
+            },
+            error: function(response){
+                console.log(response);
+            }
+        });
+    }
 });
 
 </script>

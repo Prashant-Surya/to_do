@@ -78,7 +78,7 @@ $(document).ready(function(){
 
     $("#signup").on('click', function(){
         $("#login").removeClass("border-bottom");
-        $("#signup").addClass("border-bottom");
+        $(this).addClass("border-bottom");
         $("#for-login").addClass("invisible");
         $("#for-signup").removeClass("invisible");
     });

@@ -29,8 +29,3 @@ def lists(request):
     response = render_to_response(template, ctx)
 
     return response
-
-
-def signup_submit(request):
-    if request.method = "POST":
-        
