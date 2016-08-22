@@ -42,8 +42,7 @@ $("#new-task-form textarea").keydown(function(e){
         $("#id_text").val("");
         $data = {
             'text': $text
-        }
-        console.log($data);
+        };
         $url = $form.attr("url");
         send_ajax($url, $data);
     }
@@ -59,16 +58,13 @@ $(".task").keydown(function(e){
         $data = {
             'id': $id,
             'text': $text
-        }
-        console.log($data);
+        };
         send_ajax($url, $data);
     }
 });
 
 $(".tasks-container").on("change",'.task-check', function(){
     $id = $(this).attr("task");
-    console.log("In task check");
-    console.log($id);
     qr = "textarea[task="+$id+"]";
     $textarea = $(qr);
     $url = $textarea.attr("url");
@@ -84,8 +80,12 @@ $(".tasks-container").on("change",'.task-check', function(){
     $data = {
         'completed': $completed,
         'id': $id
+    };
+    $select = $(".tasks-select").val();
+    if($select == "incomplete"){
+        console.log("91");
+        $(this).parent().fadeOut();
     }
-
     send_ajax($url, $data);
 
 });
@@ -100,7 +100,6 @@ $(".tasks-select").on("change", function(){
 });
 
 $(".tasks-container").on("click", "i.fa", function(){
-    console.log("test");
     $url = $(this).attr("url");
     $parent = $(this).parent();
     $id = $parent.attr("task");
