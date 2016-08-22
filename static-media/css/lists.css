@@ -1,0 +1,83 @@
+.container{
+    /*background-color: white;*/
+    height: 70%;
+    width: 600px;
+    overflow: auto;
+    overflow-x: hidden;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    border-radius: 5px;
+}
+.container ul{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.container ul li{
+    list-style-type: none;
+    margin-left: 0;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    clear:both;
+}
+
+.container ul li input{
+    /*width: 100%;*/
+    font-size: 30px;
+}
+
+input[type="text"]{
+    padding: 0;
+}
+
+input[type="checkbox"]{
+    height: 25px;
+    width: 25px;
+}
+
+.task-check :checked{
+    border: none;
+}
+
+textarea {
+    height: 25px;
+    width: 500px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-size: 20px;
+    padding:0;
+    resize: none;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 2px;
+}
+
+div.row-container{
+    border-bottom: 1px;
+    display: inline;
+}
+
+#new-data{
+    display: inline;
+}
+
+#new-task-form textarea{
+    margin-left: 15px;
+}
+
+button{
+    margin-top:15px;
+    margin-left:15px;
+    margin-bottom: 10px;
+}
+
+.invisible{
+    display: none;
+}
+
+.completed{
+    text-decoration: line-through;
+}
+
+div.top-holder{
+    display: inline;
+}

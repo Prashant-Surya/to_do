@@ -23,15 +23,9 @@ def home(request):
 
 def lists(request):
     template = 'lists.html'
+
     tasks = Task.objects.all().order_by('-created_at')
-    # t = []
-    # for i in tasks:
-    #     k = {
-    #         'id': int(i.id),
-    #         'text': str(i.text),
-    #         'completed': i.completed
-    #     }
-    #     t.append(k)
+
     form = TaskForm()
     ctx = {
         'form': form,

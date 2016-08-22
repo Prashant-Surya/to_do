@@ -1,92 +1,7 @@
 {% extends "base.html" %}
 
 {% block extracss %}
-<style>
-.container{
-    /*background-color: white;*/
-    height: 70%;
-    width: 600px;
-    overflow: auto;
-    overflow-x: hidden;
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    border-radius: 5px;
-}
-.container ul{
-    padding-right: 0px;
-    padding-left: 0px;
-}
-.container ul li{
-    list-style-type: none;
-    margin-left: 0;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    clear:both;
-}
-
-.container ul li input{
-    /*width: 100%;*/
-    font-size: 30px;
-}
-
-input[type="text"]{
-    padding: 0;
-}
-
-input[type="checkbox"]{
-    height: 25px;
-    width: 25px;
-}
-
-.task-check :checked{
-    border: none;
-}
-
-textarea {
-    height: 25px;
-    width: 500px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    font-size: 20px;
-    padding:0;
-    resize: none;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 2px;
-}
-
-div.row-container{
-    border-bottom: 1px;
-    display: inline;
-}
-
-#new-data{
-    display: inline;
-}
-
-#new-task-form textarea{
-    margin-left: 15px;
-}
-
-button{
-    margin-top:15px;
-    margin-left:15px;
-    margin-bottom: 10px;
-}
-
-.invisible{
-    display: none;
-}
-
-.completed{
-    text-decoration: line-through;
-}
-
-div.top-holder{
-    display: inline;
-}
-
-</style>
+<link href="{{ STATIC_URL }}css/lists.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block bodyblock %}
@@ -97,7 +12,7 @@ div.top-holder{
             <button class="float-left" id="add-task"> Add task </button>
             <select class="tasks-select float-right">
                 <option value="all">All tasks</option>
-                <option value="incomplete">Incompleted tasks</option>
+                <option value="incomplete">Incomplete tasks</option>
             </select>
         </div>
         <form id="new-task-form" class="invisible" method="POST" url="{% url save_new_form %}">
@@ -137,109 +52,7 @@ div.top-holder{
 
 {% block scripts %}
 
-<script>
-
-function send_ajax($url, $data){
-
-    $data['csrfmiddlewaretoken'] = $("input[name='csrfmiddlewaretoken']").val();
-
-    $.ajax({
-        url: $url,
-        data: $data,
-        type: "POST",
-        dataType: "json",
-        success: function(response){
-            if(response['id']){
-                prepend_row(response['id'], response['text']);
-            }else{
-                console.log(response);
-            }
-        },
-        error: function(response){
-            console.log(response);
-        }
-    });
-}
-
-function prepend_row(id, text){
-    row = "<li> \
-        <div class='row-container'> \
-            <input class='task-check' type='checkbox' task='"+id+"'/> \
-            <textarea class='task' wrap='off' rows='1' task= '" + id + "' url='{% url update_task %}' >"+
-                text + "</textarea></div> </li>";
-    $(".tasks-container").prepend(row);
-}
-
-$("#add-task").on("click", function(){
-    $("#new-task-form").removeClass("invisible");
-});
-
-$("#new-task-form textarea").keydown(function(e){
-    if((e.keyCode || e.which) == 13){
-        e.preventDefault();
-        $("#new-task-form").addClass("invisible");
-        $form = $("#new-data form");
-        $text = $("#id_text").val();
-        $("#id_text").val("");
-        $data = {
-            'text': $text
-        }
-        console.log($data);
-        $url = $form.attr("url");
-        send_ajax($url, $data);
-    }
-});
-
-
-$(".task").keydown(function(e){
-    if((e.keyCode || e.which) == 13){
-        e.preventDefault();
-        $text = $(this).val();
-        $id = $(this).attr("task");
-        $url = $(this).attr("url");
-        $data = {
-            'id': $id,
-            'text': $text
-        }
-        console.log($data);
-        send_ajax($url, $data);
-    }
-});
-
-$(".tasks-container").on("change",'.task-check', function(){
-    $id = $(this).attr("task");
-    console.log("In task check");
-    console.log($id);
-    qr = "textarea[task="+$id+"]";
-    $textarea = $(qr);
-    $url = $textarea.attr("url");
-    if($(this).is(":checked")){
-        $textarea.prop("disabled", true);
-        $textarea.addClass("completed");
-        $completed = "true";
-    }else{
-        $textarea.prop("disabled", false);
-        $textarea.removeClass("completed");
-        $completed = "false";
-    }
-    $data = {
-        'completed': $completed,
-        'id': $id
-    }
-
-    send_ajax($url, $data);
-
-});
-
-$(".tasks-select").on("change", function(){
-    $val = $(this).val();
-    if($val == "all"){
-        $("textarea.completed").parent().fadeIn();
-    }else if($val == "incomplete"){
-        $("textarea.completed").parent().fadeOut();
-    }
-});
-
+<script src="{{ STATIC_URL }}js/lists.js">
 </script>
 
 
