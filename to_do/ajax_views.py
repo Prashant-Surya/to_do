@@ -12,12 +12,42 @@ def save_new_form(request):
         'text': text
     }
 
-    Task.objects.create(**kwargs)
+    t = Task.objects.create(**kwargs)
 
     print request.POST
 
     result = {
         'status': "OK",
+        'id': int(t.id),
+        'text': text,
+    }
+
+    return HttpResponse(
+        json.dumps(
+            result, indent=4),
+        mimetype='application/json')
+
+
+def update_task(request):
+    task_id = request.POST["id"]
+    task_text = request.POST.get("task_text", None)
+    task_completed = request.POST.get("completed", False)
+
+    t = Task.objects.get(id=task_id)
+
+    if task_text:
+        t.text = task_text
+
+    if task_completed != False:
+        if task_completed == "true":
+            t.completed = True
+        elif task_completed == "false":
+            t.completed = False
+
+    t.save()
+
+    result = {
+        'status': "OK"
     }
 
     return HttpResponse(
