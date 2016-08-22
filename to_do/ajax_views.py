@@ -54,3 +54,19 @@ def update_task(request):
         json.dumps(
             result, indent=4),
         mimetype='application/json')
+
+
+def delete_task(request):
+    task_id = request.POST['id']
+    t = Task.objects.get(id=task_id)
+
+    t.delete()
+
+    result = {
+        'status': "OK"
+    }
+
+    return HttpResponse(
+        json.dumps(
+            result, indent=4),
+        mimetype='application/json')

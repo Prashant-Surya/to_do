@@ -2,6 +2,11 @@
 
 {% block extracss %}
 <link href="{{ STATIC_URL }}css/lists.css" rel="stylesheet" type="text/css">
+<style>
+i.fa{
+    cursor: pointer;
+}
+</style>
 {% endblock %}
 
 {% block bodyblock %}
@@ -25,7 +30,7 @@
 
         {% for i in tasks %}
         <li>
-            <div class='row-container'>
+            <div class='row-container' task="{{ i.id }}">
                 <input class="task-check"
                 {% if i.completed %}
                     checked
@@ -40,7 +45,8 @@
                         completed
                     {% endif %}
                 " wrap="off" rows="1" task="{{ i.id }}"
-                    url="{% url update_task %}">{{ i.text }} </textarea>
+                    url="{% url update_task %}">{{ i.text }}</textarea>
+                <i class="fa fa-trash" url="{% url delete_task %}"></i>
             </div>
         </li>
         {% endfor %}
@@ -54,6 +60,20 @@
 
 <script src="{{ STATIC_URL }}js/lists.js">
 </script>
+<script>
 
+$(".tasks-container").on("click", "i.fa", function(){
+    console.log("test");
+    $url = $(this).attr("url");
+    $parent = $(this).parent();
+    $id = $parent.attr("task");
+    $data = {
+        'id': $id
+    };
+    $parent.remove();
+    send_ajax($url, $data);
+});
+
+</script>
 
 {% endblock %}
