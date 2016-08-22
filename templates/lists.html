@@ -46,7 +46,7 @@ i.fa{
                     {% endif %}
                 " wrap="off" rows="1" task="{{ i.id }}"
                     url="{% url update_task %}">{{ i.text }}</textarea>
-                <i class="fa fa-trash" url="{% url delete_task %}"></i>
+                <i class="fa fa-trash fa-2x" url="{% url delete_task %}"></i>
             </div>
         </li>
         {% endfor %}

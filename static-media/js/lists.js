@@ -21,11 +21,11 @@ function send_ajax($url, $data){
 }
 
 function prepend_row(id, text){
-    row = "<li> \
-        <div class='row-container'> \
-            <input class='task-check' type='checkbox' task='"+id+"'/> \
-            <textarea class='task' wrap='off' rows='1' task= '" + id + "' url='{% url update_task %}' >"+
-                text + "</textarea></div> </li>";
+    row = "<li>" +
+        "<div class='row-container'> "+
+            "<input class='task-check' type='checkbox' task='"+id+"'/>"+
+             "<textarea class='task' wrap='off' rows='1' task= '" + id + "' url='{% url update_task %}' >"+
+                text + "</textarea> <i class='fa fa-trash fa-2x' url='{% url delete_task %}'></i></div>  </li>";
     $(".tasks-container").prepend(row);
 }
 
