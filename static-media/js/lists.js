@@ -98,3 +98,15 @@ $(".tasks-select").on("change", function(){
         $("textarea.completed").parent().fadeOut();
     }
 });
+
+$(".tasks-container").on("click", "i.fa", function(){
+    console.log("test");
+    $url = $(this).attr("url");
+    $parent = $(this).parent();
+    $id = $parent.attr("task");
+    $data = {
+        'id': $id
+    };
+    $parent.remove();
+    send_ajax($url, $data);
+});
