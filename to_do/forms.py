@@ -35,6 +35,7 @@ class TaskForm(forms.ModelForm):
             'completed': forms.CheckboxInput(),
             'text': forms.Textarea(attrs={
                 'wrap': 'off',
-                'rows': '1'
+                'rows': '1',
+                'placeholder': "Press enter to save the task"
             }),
         }
