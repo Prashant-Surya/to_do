@@ -29,8 +29,9 @@ def save_new_form(request):
 
 
 def update_task(request):
+    print request.POST
     task_id = request.POST["id"]
-    task_text = request.POST.get("task_text", None)
+    task_text = request.POST.get("text", None)
     task_completed = request.POST.get("completed", False)
 
     t = Task.objects.get(id=task_id)
@@ -47,7 +48,8 @@ def update_task(request):
     t.save()
 
     result = {
-        'status': "OK"
+        'status': "OK",
+        'text': t.text
     }
 
     return HttpResponse(
