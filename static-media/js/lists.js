@@ -44,7 +44,12 @@ $("#new-task-form textarea").keydown(function(e){
             'text': $text
         };
         $url = $form.attr("url");
-        send_ajax($url, $data);
+        if($text)
+            send_ajax($url, $data);
+        else
+            $("#id_text").prop("placeholder", "Enter something to save");
+
+
     }
 });
 
@@ -59,7 +64,9 @@ $(".task").keydown(function(e){
             'id': $id,
             'text': $text
         };
-        send_ajax($url, $data);
+        if($text)
+            send_ajax($url, $data);
+
     }
 });
 
@@ -108,4 +115,11 @@ $(".tasks-container").on("click", "i.fa", function(){
     };
     $parent.remove();
     send_ajax($url, $data);
+});
+
+$(document).keyup(function(e){
+    if((e.keyCode || e.which) == 16){
+        $("#add-task").click();
+        $("#id_text").focus();
+    }
 });
